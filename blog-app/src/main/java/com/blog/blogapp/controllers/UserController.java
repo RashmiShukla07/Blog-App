@@ -18,6 +18,8 @@ import com.blog.blogapp.payloads.ApiResponse;
 import com.blog.blogapp.payloads.UserDto;
 import com.blog.blogapp.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -27,14 +29,14 @@ public class UserController {
 	
 	//POST create user
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
 		UserDto createUserDto = this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
 	}
 	
 	//PUT update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId){
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId){
 		UserDto updatedUserDto = this.userService.updateUser(userDto, userId);
 		return new ResponseEntity<>(updatedUserDto,HttpStatus.OK);
 	}
@@ -43,7 +45,7 @@ public class UserController {
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer userId){
 		this.userService.deleteUser(userId);
-		return new ResponseEntity<>(new ApiResponse("Employee sucessfully deleted!",true),HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse("User sucessfully deleted!",true),HttpStatus.OK);
 	}
 	
 	//GET all user

@@ -1,8 +1,5 @@
 package com.blog.blogapp.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,26 +12,27 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.*;
 
 @Entity
-@Table(name ="users")
+@Table(name="categories")
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Category {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer categoryId;
 	
-	@Column(name="user_name", nullable = false, length =100)
-	private String name ;
+	@Column(name="title",length=100,nullable=false)
+	private String categoryTitle;
 	
-	private String password;
-	private String email;
-	private String about;
+	@Column(name="description")
+	private String categoryDescription;
 	
-	//a user can make multiple posts but a single post can't have multiple/different author.
-	@OneToMany(mappedBy = "user", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
+	
+	//One to many relation - a category can have many posts, and a post can have a single category.
+	@OneToMany(mappedBy = "category", cascade= CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Post> posts = new ArrayList<>();
 }
