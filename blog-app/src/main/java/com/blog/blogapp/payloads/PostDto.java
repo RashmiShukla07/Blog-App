@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostDto {
+	private Integer postId;
 	
 	//User provides these details
 	private String title;
